@@ -4,7 +4,9 @@
 import json
 
 def gen_bin_tree(height=4, root=3):
-    if height <= 1:
+    if height <= 0:
+        return None
+    if height == 1:
         return {"value": root, "left": None, "right": None}
 
     return {
