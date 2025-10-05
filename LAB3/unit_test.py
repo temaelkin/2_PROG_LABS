@@ -32,6 +32,13 @@ class TestGenBinTree(unittest.TestCase):
         self.assertEqual(tree["left"]["value"], 5)
         self.assertEqual(tree["right"]["value"], 9)
 
+    def test_float_root(self):
+        """Check that the tree is correctly generated when root is a float."""
+        tree = gen_bin_tree(height=2, root=1.5)
+        self.assertEqual(tree["value"], 1.5)
+        self.assertEqual(tree["left"]["value"], 3.5)
+        self.assertEqual(tree["right"]["value"], 4.5)
+
     def test_determined(self):
         """Ensure that repeated calls with the same arguments produce identical but independent trees."""
         t1 = gen_bin_tree(height=4, root=3)
