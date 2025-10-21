@@ -16,8 +16,8 @@ class TestGenBinTree(unittest.TestCase):
         self.assertIn("left", tree)
         self.assertIn("right", tree)
 
-    def test_base_case(self):
-        """Check the base case when height equals 1."""
+    def test_unit_height(self):
+        """Check the case when height equals 1."""
         tree = gen_bin_tree(height=1, root=10)
         self.assertEqual(tree, {"value": 10, "left": None, "right": None})
 
