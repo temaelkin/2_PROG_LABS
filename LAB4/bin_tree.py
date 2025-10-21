@@ -24,6 +24,9 @@ def gen_bin_tree(height: int = 4, root: int | float = 3, left_branch = lambda x:
     -------
     A nested dictionary representing the binary tree.
     """
+    if height < 1:
+        return None
+
     root_node = {
         "value": root, 
         "left": None, 
