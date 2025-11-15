@@ -26,7 +26,7 @@ def gen_bin_tree(height: int = 4,
     Returns
     -------
     A nested dictionary representing the binary tree,
-    or None if the height is 0.
+    or Root value if the height is 0 and None if the height is less than 0.
     """
 
     if height < 0:
