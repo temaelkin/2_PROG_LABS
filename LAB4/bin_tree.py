@@ -1,7 +1,10 @@
 import json
 from collections import deque
 
-def gen_bin_tree(height: int = 4, root: int | float = 3, left_branch = lambda x: x + 2, right_branch = lambda x: x * 3) -> dict:
+def gen_bin_tree(height: int = 4, 
+                 root: int | float = 3, 
+                 left_branch = lambda x: x + 2, 
+                 right_branch = lambda x: x * 3) -> dict:
     """
     Generate a binary tree as a nested dictionary NON-recusively.
 
@@ -19,13 +22,19 @@ def gen_bin_tree(height: int = 4, root: int | float = 3, left_branch = lambda x:
     ----------
     height : The height of the tree (must be >= 1). Defaults to 4.
     root : The value stored in the root node. Defaults to 3.
+    left_branch : Lambda for computing left child's value. Defaults to x + 2.
+    right_branch : Lambda for computing right child's value. Defaults to x * 3.
 
     Returns
     -------
-    A nested dictionary representing the binary tree.
+    A nested dictionary representing the binary tree,
+    or Root value if the height is 0 and None if the height is less than 0.
     """
-    if height < 1:
+
+    if height < 0:
         return None
+    elif height == 0:
+        return root
 
     root_node = {
         "value": root, 
@@ -33,32 +42,30 @@ def gen_bin_tree(height: int = 4, root: int | float = 3, left_branch = lambda x:
         "right": None
     }
     
-    queue = deque([(root_node, 1)])
+    queue = deque([root_node])
 
-    while queue:
-        node, level = queue.popleft()
-        if level == height:
-            continue
+    for _ in range(height):
+        level_size = len(queue)
 
-        left_value = left_branch(node["value"])
-        right_value = right_branch(node["value"])
+        for _ in range(level_size):
+            node = queue.popleft()
 
-        left_child = {
-            "value": left_value, 
-            "left": None, 
-            "right": None
-        }
-        right_child = {
-            "value": right_value, 
-            "left": None, 
-            "right": None
-        }
+            if height == 0:
+                continue
 
-        node["left"] = left_child
-        node["right"] = right_child
+            left_value = left_branch(node["value"])
+            right_value = right_branch(node["value"])
 
-        queue.append((left_child, level + 1))
-        queue.append((right_child, level + 1))
+            left_child = {"value": left_value, "left": None, "right": None}
+            right_child = {"value": right_value, "left": None, "right": None}
+
+            node["left"] = left_child
+            node["right"] = right_child
+
+            queue.append(left_child)
+            queue.append(right_child)
+
+        height -= 1
 
     return root_node
 
