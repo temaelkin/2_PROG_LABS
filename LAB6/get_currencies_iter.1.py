@@ -26,12 +26,11 @@ def get_currencies(currency_codes, url="https://www.cbr-xml-daily.ru/daily_json.
 
         currencies = {}
 
-        if "Valute" in data:
-            for code in currency_codes:
-                if code in data["Valute"]:
-                    currencies[code] = data["Valute"][code]["Value"]
-                else:
-                    currencies[code] = f"Код валюты '{code}' не найден."
+        for code in currency_codes:
+            if code in data["Valute"]:
+                currencies[code] = data["Valute"][code]["Value"]
+            else:
+                currencies[code] = f"Код валюты '{code}' не найден."
         return currencies
 
     except requests.exceptions.RequestException as e:
