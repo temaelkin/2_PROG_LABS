@@ -2,7 +2,7 @@ import unittest
 from io import StringIO
 from unittest.mock import patch, Mock
 import requests
-from get_currencies_iter_1 import get_currencies  # импорт твоей функции
+from get_currencies_iter_1 import get_currencies 
 
 
 class TestGetCurrencies(unittest.TestCase):
@@ -22,7 +22,7 @@ class TestGetCurrencies(unittest.TestCase):
         result = get_currencies(["USD", "XYZ"])
         self.assertIn("USD", result)
         self.assertIn("XYZ", result)
-        self.assertIsInstance(result["XYZ"], str)  # возвращается сообщение об ошибке
+        self.assertIsInstance(result["XYZ"], str)
 
     def test_bad_url_exception_and_output(self):
         """Проверка поднятия RequestException и вывода ошибки в поток"""
@@ -39,7 +39,7 @@ class TestGetCurrencies(unittest.TestCase):
 
         mock_response = Mock()
         mock_response.raise_for_status.return_value = None
-        mock_response.json.return_value = {}  # нет ключа "Valute"
+        mock_response.json.return_value = {}
         mock_get.return_value = mock_response
 
         result = get_currencies(["USD"], handle=buf)
@@ -52,13 +52,13 @@ class TestGetCurrencies(unittest.TestCase):
         """Проверка обработки пустого словаря Valute"""
         mock_response = Mock()
         mock_response.raise_for_status.return_value = None
-        mock_response.json.return_value = {"Valute": {}}  # пустой словарь валют
+        mock_response.json.return_value = {"Valute": {}}
         mock_get.return_value = mock_response
 
         result = get_currencies(["XYZ"])
         self.assertIn("XYZ", result)
         self.assertIsInstance(result["XYZ"], str)
-        self.assertIn("не найден", result["XYZ"])  # проверяем текст ошибки в словаре
+        self.assertIn("не найден", result["XYZ"])
 
 if __name__ == "__main__":
     unittest.main()

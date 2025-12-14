@@ -34,7 +34,7 @@ class TestGetCurrenciesWithDecorator(unittest.TestCase):
         """Проверка обработки KeyError при отсутствии 'Valute'"""
         mock_response = Mock()
         mock_response.raise_for_status.return_value = None
-        mock_response.json.return_value = {}  # нет ключа "Valute"
+        mock_response.json.return_value = {}
         mock_get.return_value = mock_response
 
         result = get_currencies(["USD"])
@@ -45,7 +45,7 @@ class TestGetCurrenciesWithDecorator(unittest.TestCase):
         """Проверка пустого словаря Valute и несуществующей валюты"""
         mock_response = Mock()
         mock_response.raise_for_status.return_value = None
-        mock_response.json.return_value = {"Valute": {}}  # пустой словарь валют
+        mock_response.json.return_value = {"Valute": {}}
         mock_get.return_value = mock_response
 
         result = get_currencies(["XYZ"])
